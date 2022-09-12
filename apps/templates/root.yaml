@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     path: apps/
-    repoURL:  https://github.com/jtmack6/argo-aks.git
+    repoURL:  https://github.com/jtmack6/argocd-aks.git
     targetRevision: HEAD
   syncPolicy:
     automated:
