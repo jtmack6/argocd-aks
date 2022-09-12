@@ -16,6 +16,9 @@ spec:
           apiKeyExistingSecret: datadog-secret
           appKeyExistingSecret: datadog-secret
           clusterName: "cheapaks"
+        clusterAgent:
+          metricsProvider:
+            enabled: false
     repoURL: https://helm.datadoghq.com
     targetRevision: 3.1.0
   syncPolicy:
