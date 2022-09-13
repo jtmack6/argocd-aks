@@ -20,7 +20,6 @@ spec:
             tlsVerify:  false
           clusterChecks:
             enabled: true
-
         clusterAgent:
           metricsProvider:
             enabled: false
