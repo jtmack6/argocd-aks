@@ -43,25 +43,25 @@ spec:
                 path: /var/log/kubernetes/apiserver/audit.log
                 service: kube-apiserver-audit
                 source: kubernetes.audit
-      agents:
-        volumes:
-          - hostPath:
-              path: /etc/kubernetes/pki/etcd
-            name: etcd-certs
-          - hostPath:
-              path: /var/log/kubernetes
-            name: klogpath
-        volumeMounts:
-          - name: etcd-certs
-            mountPath: /host/etc/kubernetes/pki/etcd
-            readOnly: true
-          - name: klogpath
-            mountPath: /var/log/kubernetes
-            readOnly: true
-        tolerations:
-        - effect: NoSchedule
-          key: node-role.kubernetes.io/master
-          operator: Exists
+        agents:
+          volumes:
+            - hostPath:
+                path: /etc/kubernetes/pki/etcd
+              name: etcd-certs
+            - hostPath:
+                path: /var/log/kubernetes
+              name: klogpath
+          volumeMounts:
+            - name: etcd-certs
+              mountPath: /host/etc/kubernetes/pki/etcd
+              readOnly: true
+            - name: klogpath
+              mountPath: /var/log/kubernetes
+              readOnly: true
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Exists
     repoURL: https://helm.datadoghq.com
     targetRevision: 3.1.0
   syncPolicy:
