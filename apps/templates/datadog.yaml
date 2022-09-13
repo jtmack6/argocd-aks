@@ -16,6 +16,7 @@ spec:
           apiKeyExistingSecret: datadog-secret
           appKeyExistingSecret: datadog-secret
           clusterName: "cheapaks"
+          env: "aks"
           kubelet:
             tlsVerify:  false
           clusterChecks:
