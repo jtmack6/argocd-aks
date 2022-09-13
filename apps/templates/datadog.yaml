@@ -18,9 +18,51 @@ spec:
           clusterName: "cheapaks"
           kubelet:
             tlsVerify:  false
+          clusterChecks:
+            enabled: true
+
         clusterAgent:
           metricsProvider:
             enabled: false
+        logs:
+          enabled: true
+          contrainerCollectAll: true
+        ignoreAutoConfig:
+          - etcd
+        confd:
+          etcd.yaml: |-
+            ad_identifiers:
+              - etcd
+            instances:
+              - prometheus_url: https://%%host%%:2379/metrics
+                tls_ca_cert: /host/etc/kubernetes/pki/etcd/ca.crt
+                tls_cert: /host/etc/kubernetes/pki/etcd/server.crt
+                tls_private_key: /host/etc/kubernetes/pki/etcd/server.key
+          kube_audit.yaml: |-
+            logs:
+              - type: file
+                path: /var/log/kubernetes/apiserver/audit.log
+                service: kube-apiserver-audit
+                source: kubernetes.audit
+      agents:
+        volumes:
+          - hostPath:
+              path: /etc/kubernetes/pki/etcd
+            name: etcd-certs
+          - hostPath:
+              path: /var/log/kubernetes
+            name: klogpath
+        volumeMounts:
+          - name: etcd-certs
+            mountPath: /host/etc/kubernetes/pki/etcd
+            readOnly: true
+          - name: klogpath
+            mountPath: /var/log/kubernetes
+            readOnly: true
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
     repoURL: https://helm.datadoghq.com
     targetRevision: 3.1.0
   syncPolicy:
